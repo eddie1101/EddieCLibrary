@@ -53,6 +53,7 @@ void add_range(range_list* r, long low, long high)
   }
   r->rs[r->num_ranges].low = low;
   r->rs[r->num_ranges].high = high;
+  r->num_ranges += 1;
 }
 
 range* get_range(range_list* r, size_t idx)
