@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "ranges.h"
+#include "ecl_ranges.h"
 
 range* create_ranges(size_t num_ranges)
 {

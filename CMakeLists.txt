@@ -1,20 +1,30 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.26)
 
 set(PROJECT_VERSION 0.1.0)
 
-project(ECL VERSION ${PROJECT_VERSION})
+project(ecl VERSION ${PROJECT_VERSION})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_library(ECL SHARED
-  src/ranges.c
+add_library(ecl SHARED
+  src/ecl_ranges.c
 )
 
-target_include_directories(ECL PRIVATE include)
-set_target_properties(ECL PROPERTIES
+target_sources(
+  ecl
+  PUBLIC
+    FILE_SET public_headers
+    TYPE HEADERS
+    BASE_DIRS include
+    FILES
+      include/ecl.h
+      include/ecl_ranges.h
+)
+
+target_include_directories(ecl PRIVATE include)
+set_target_properties(ecl PROPERTIES
   VERSION ${PROJECT_VERSION}
   SOVERSION ${PROJECT_VERSION}
-  PUBLIC_HEADER include/ecl.h
   ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
   LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
@@ -22,9 +32,6 @@ set_target_properties(ECL PROPERTIES
 
 include(GNUInstallDirs)
 
-install(TARGETS ECL
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
+install(TARGETS ecl FILE_SET public_headers)
 
 
